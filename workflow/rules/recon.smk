@@ -119,14 +119,14 @@ rule gapseq_medium:
         model="models/{sample}/{sample}-draft.RDS",
         pwy="models/{sample}/{sample}-all-Pathways.tbl.gz"
     params:
-        c=config.get("medium_c", 1)
+        c=config.get("medium_c", "")
     output:
         "models/{sample}/{sample}-medium.csv"
     log:
         "logs/medium/{sample}.log"
     shell:
         """
-        par_c={params.c}
+        par_c="{params.c}"
         if [ -n "$par_c" ]; then
             gapseq/./gapseq medium -m {input.model} -p {input.pwy} -c {params.c} -f models/{wildcards.sample} > {log}
         else
